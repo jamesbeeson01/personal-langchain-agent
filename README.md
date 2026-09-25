@@ -1,6 +1,6 @@
-## LangChain Starter Agent
+## Personal LangChain Agent
 
-Simple LangChain agent you can improve over time.
+Simple LangChain agent for my personal use and exploration.
 
 ## Setup (one time)
 

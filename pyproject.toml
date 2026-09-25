@@ -1,5 +1,5 @@
 [project]
-name = "langchain-starter-agent"
+name = "personal-langchain-agent"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
