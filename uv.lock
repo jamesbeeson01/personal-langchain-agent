@@ -891,7 +891,7 @@ wheels = [
 ]
 
 [[package]]
-name = "scratch-agent-2"
+name = "personal-langchain-agent"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
