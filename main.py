@@ -1,42 +1,34 @@
-from langchain.agents import create_agent
-from langgraph.checkpoint.memory import InMemorySaver  
-import uuid
-
 from dotenv import load_dotenv
 load_dotenv()
 
+from commands import commands
+from main_agent import get_response
+from error_handler import setup_exception_hook
+
 from rich.console import Console
 from rich.markdown import Markdown
+from rich.rule import Rule
 
 console = Console()
 
-from tools import list_directory, read_safe_file
-
-
-agent = create_agent(
-    model="google_genai:gemini-flash-lite-latest",
-    tools=[read_safe_file, list_directory],
-    checkpointer=InMemorySaver(),
-)
-
-thread_config = {"configurable": {"thread_id": uuid.uuid1()}}
-def get_response(prompt: str) -> str:
-    return agent.invoke(
-        {"messages": [{"role": "user", "content": prompt}]},
-        thread_config,
-    )["messages"][-1].text
-
 
 def main():
+    setup_exception_hook()
+    # 1/0 # test error handler
     while True:
-        print("\n-------- User ---------")
+        console.print(Rule("[bold cyan]USER[/]", characters="━", style = "cyan"))
         try:
             prompt = input("Input: ")
-            if prompt == "exit": break
+
+            if prompt in commands: 
+                commands[prompt]()
+                continue
+
             response = get_response(prompt)
-        except EOFError:
+        except (EOFError, SystemExit):
             break
-        print("\n--------- AI ----------")
+
+        console.print(Rule("[bold green]AI[/]", characters="━", style = "green"))
         console.print(Markdown(response))
     
 
